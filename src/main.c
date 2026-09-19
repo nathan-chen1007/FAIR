@@ -21,8 +21,19 @@ int main(void) {
 		return 1;
 	}
 	char line[256];
+	// ignore the header line, i.e. the labels for the numbers in csv file
+	// we do this by calling fgets once and then not doing anything with it
+	fgets(line, sizeof line, f);
 	while(fgets(line, sizeof line, f) != NULL) {
-		printf("%s", line);
+		// this loop prints the typical_price of each bar if it's a valid bar
+		struct Bar b;
+		int got = sscanf(line, "%31[^,], %lf, %lf, %lf, %lf, %lf,",
+						 b.timestamp, &b.open, &b.high, &b.low, &b.close, &b.volume);
+		if (got != 6) {
+			printf("Input line is not valid bar\n");
+			continue; 
+		}
+		printf("%f\n", typical_price(&b));
 	}
 	fclose(f);
 	return 0;
