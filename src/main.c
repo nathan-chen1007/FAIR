@@ -2,28 +2,27 @@
 #include <string.h>
 #include "bar.h"
 #include "stats.h"
+#include <stdlib.h>
 
 int main(void) {
-	struct Bar bars[3] = {
-		{"2026-09-14", 100, 104,  98, 101, 1000},
-       	{"2026-09-15", 102, 106, 101, 105, 2000},
-       	{"2026-09-16", 104, 107, 103, 105, 1500},
-	}; 
-	struct Bar testing_n_0[0] = {};
-	double testing_n_0_twap = twap(testing_n_0, 0);
-	double bars_twap = twap(bars, 3);
-	double bars_vwap = vwap(bars, 3);
-	printf("%f\n", twap(bars, 3));
-	printf("%f\n", vwap(bars, 3));
+	struct Bar *bars = NULL;
+	size_t bars_count = 0; // how many bars are stored 
+	size_t bars_max = 0; // how many fit before you must grow\
+
 	FILE *f = fopen("data/sample.csv", "r");
 	if (f == NULL) {
 		perror("fopen");
 		return 1;
 	}
 	char line[256];
-	// ignore the header line, i.e. the labels for the numbers in csv file
-	// we do this by calling fgets once and then not doing anything with it
-	fgets(line, sizeof line, f);
+	// skip the header line (the column labels)
+	// the read itself will skip the header line
+	// if the header line is there, it will succeed and skip it
+	// if it gets some bullshit (EOF for ex), it will early return
+	if (fgets(line, sizeof line, f) == NULL) {
+		fclose(f);
+		return 1;
+	}
 	while(fgets(line, sizeof line, f) != NULL) {
 		// this loop prints the typical_price of each bar if it's a valid bar
 		struct Bar b;
@@ -33,10 +32,34 @@ int main(void) {
 			printf("Input line is not valid bar\n");
 			continue; 
 		}
-		printf("%f\n", typical_price(&b));
+		// doubling method for dynamic array
+		if (bars_count == bars_max) {
+			if (bars_max == 0) {
+				bars_max = 2;
+			} else {
+				bars_max *= 2;
+			}
+			// only reason I am doing is this is for if the realloc fails, very unlikely
+			// safe coding practice
+			struct Bar* tmp = realloc(bars, bars_max * sizeof(struct Bar));
+			if (tmp == NULL) {
+				fclose(f);
+				free(bars);
+				return 1;
+			} else {
+				bars = tmp;
+			}
+		}
+		bars[bars_count] = b;
+		bars_count++;
 	}
 	fclose(f);
+	printf("%zu\n", bars_count);
+	// the bars + count - 3 starts me at the 3rd last element of bars;
+	// i.e. the 3rd last bar
+	printf("%f\n", twap(bars + bars_count - 3, 3));
+	printf("%f\n", vwap(bars + bars_count - 3, 3));
+	free(bars);
 	return 0;
-
 }
 
