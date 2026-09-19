@@ -15,6 +15,16 @@ int main(void) {
 	double bars_vwap = vwap(bars, 3);
 	printf("%f\n", twap(bars, 3));
 	printf("%f\n", vwap(bars, 3));
+	FILE *f = fopen("data/sample.csv", "r");
+	if (f == NULL) {
+		perror("fopen");
+		return 1;
+	}
+	char line[256];
+	while(fgets(line, sizeof line, f) != NULL) {
+		printf("%s", line);
+	}
+	fclose(f);
 	return 0;
 
 }
