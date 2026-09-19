@@ -4,6 +4,7 @@
 #include "stdlib.h"
 #include <assert.h>
 #include "stats.h"
+#include <math.h>
 
 struct Sample {
     double price;

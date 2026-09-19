@@ -10,7 +10,7 @@ double twap(const struct Bar* bars, size_t n) {
         return 0;
     }
     double twap_numerator = 0;
-    for (int i = 0; i < n; i++) {
+    for (size_t i = 0; i < n; i++) {
         twap_numerator += typical_price(&(bars[i]));
     }
     double twap_final = twap_numerator / n; 
@@ -23,7 +23,7 @@ double vwap(const struct Bar* bars, size_t n) {
     }
     double vwap_numerator = 0;
     double vwap_denominator = 0;
-    for (int i = 0; i < n; i++) {
+    for (size_t i = 0; i < n; i++) {
         vwap_numerator += (typical_price(&(bars[i])) * (bars[i]).volume);
         vwap_denominator += (bars[i]).volume;
     }
