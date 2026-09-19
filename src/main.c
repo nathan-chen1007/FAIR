@@ -6,17 +6,6 @@
 #include "csv.h"
 #include "window.h"
 
-void test(struct Bar* bars) {
-	struct Window w;
-	window_init(&w, 3);
-
-	for (int i = 0; i < 3; i++) {
-		window_push(&w, typical_price(&bars[i]), bars[i].volume);
-	}
-	printf("%f\n", window_twap(&w));
-	printf("%f\n", window_vwap(&w));
-	window_free(&w);
-}
 
 int main(void) {
 	
@@ -25,7 +14,6 @@ int main(void) {
 	if (read_bars("data/sample.csv", &bars, &bars_count) != 0) {
 		return 1;
 	} 
-	test(bars);
 	printf("%zu\n", bars_count);
 	// the bars + count - 3 starts me at the 3rd last element of bars;
 	// i.e. the 3rd last bar
