@@ -32,7 +32,7 @@ int read_bars(const char *path, struct Bar **out, size_t *count) {
 			continue; 
 		}
 		// doubling method for dynamic array
-		if (*count == bars_max) {
+		if (bars_count == bars_max) {
 			if (bars_max == 0) {
 				bars_max = 2;
 			} else {
