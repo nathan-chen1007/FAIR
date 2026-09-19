@@ -4,6 +4,9 @@
 #include "stats.h"
 #include <stdlib.h>
 #include "csv.h"
+#include "window.h"
+
+
 
 int main(void) {
 	struct Bar *bars = NULL;
