@@ -10,10 +10,12 @@ int main(void) {
        	{"2026-09-16", 104, 107, 103, 105, 1500},
 	}; 
 	struct Bar testing_n_0[0] = {};
-
 	double testing_n_0_twap = twap(testing_n_0, 0);
 	double bars_twap = twap(bars, 3);
+	double bars_vwap = vwap(bars, 3);
 	printf("%f\n", twap(bars, 3));
+	printf("%f\n", vwap(bars, 3));
 	return 0;
+
 }
 
