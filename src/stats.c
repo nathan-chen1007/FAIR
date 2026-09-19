@@ -17,3 +17,9 @@ double twap(const struct Bar* bars, size_t n) {
     return twap_final;
 }
 
+/* double vwap(const struct Bar* bars, size_t n) {
+    if (!n) {
+        return 0;
+    }
+    double 
+} */
