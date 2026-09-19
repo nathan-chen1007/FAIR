@@ -23,3 +23,27 @@ void window_free(struct Window *w) {
     free(w->samples);
     return;
 }
+
+void window_push(struct Window *w, double price, double volume) {
+    assert(w->count < w->capacity);
+    struct Sample newsample = {price, volume};
+    w->samples[(w->head + w->count) % w->capacity];
+    w->sum_price += price;
+    w->sum_volume += volume;
+    w->sum_pv += (price * volume);
+    (w->count)++;
+}
+
+double window_twap(const struct Window *w) {
+    if (w->count == 0) {
+        return 1;
+    }
+    return (w->sum_price / w->count);
+}
+
+double window_vwap(const struct Window *w) {
+    if (w->count == 0) {
+        return 1;
+    }
+    return (w->sum_pv / w->sum_volume);
+}

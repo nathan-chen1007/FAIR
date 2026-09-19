@@ -2,6 +2,8 @@
 #define WINDOW_H
 #include "stdio.h"
 #include "stdlib.h"
+#include <assert.h>
+#include "stats.h"
 
 struct Sample {
     double price;
@@ -20,5 +22,8 @@ struct Window {
 
 int window_init(struct Window *w, size_t capacity);
 void window_free(struct Window *w);
+void window_push(struct Window *w, double price, double volume);
+double window_twap(const struct Window *w);
+double window_vwap(const struct Window *W);
 
 #endif
