@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "bar.h"
+#include "stats.h"
 
 int main(void) {
 	struct Bar bar; 
@@ -10,7 +11,7 @@ int main(void) {
 	bar.low = 98;
 	bar.close = 101;
 	bar.volume = 1000;
-	printf("%f\n", bar.close);
+	printf("%f\n", typical_price(&bar));
 	return 0;
 }
 
