@@ -4,14 +4,13 @@
 #include "stats.h"
 
 int main(void) {
-	struct Bar bar; 
-	strcpy(bar.timestamp, "2026-09-14");
-	bar.open = 100;
-	bar.high = 104;
-	bar.low = 98;
-	bar.close = 101;
-	bar.volume = 1000;
-	printf("%f\n", typical_price(&bar));
+	struct Bar bars[3] = {
+		{"2026-09-14", 100, 104,  98, 101, 1000},
+       	{"2026-09-15", 102, 106, 101, 105, 2000},
+       	{"2026-09-16", 104, 107, 103, 105, 1500},
+	}; 
+	double bars_twap = twap(bars, 3);
+	printf("%f\n", twap(bars, 3));
 	return 0;
 }
 
