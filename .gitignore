@@ -57,3 +57,4 @@ fair
 test_window
 benchmark
 drift_test
+data/*_*.csv
