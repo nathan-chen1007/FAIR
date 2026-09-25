@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Fetch a ticker's daily bars (if not already downloaded today) and run Fair on them.
+# Usage: ./fair-ticker <ticker> <period> <window>
+# Example: ./fair-ticker SPY 1y 20     (20-bar rolling TWAP/VWAP)
+set -euo pipefail
+cd "$(dirname "$0")"
+
+if [ "$#" -ne 3 ]; then
+    echo "Usage: $0 <ticker> <period> <window>" >&2
+    echo "  period: 1y 2y 5y 10y max   window: in trading days" >&2
+    exit 1
+fi
+
+ticker=$(echo "$1" | tr '[:lower:]' '[:upper:]')
+period=$2
+csv="data/${ticker}_${period}.csv"
+
+# Reuse today's download; otherwise fetch a fresh copy.
+if [ -f "$csv" ] && [ "$(date -r "$csv" +%F)" = "$(date +%F)" ]; then
+    echo "Using cached $csv"
+else
+    python3 tools/fetch_bars.py "$ticker" "$period" "$csv"
+fi
+
+make -s fair
+./fair "$csv" "$3"
