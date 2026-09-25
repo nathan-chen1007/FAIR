@@ -97,7 +97,7 @@ Worst-case relative error over the run: about 2.2e-13 for TWAP and 1.5e-10 for V
 ## Limitations
 
 - Windows are measured in bars, not in time. Gaps such as weekends and overnight are not treated specially.
-- Data is read from a file. There is no live feed or ticker lookup.
+- Data comes from a CSV file, optionally downloaded by ticker. There is no live or streaming feed.
 - Timestamps are stored as text and are not validated or checked for ordering.
 - Benchmark and drift results come from synthetic data on one machine.
 - Drift stayed far below tolerance in the tests, but there is no periodic full recompute to reset it. A production version running for very long periods might add one.
