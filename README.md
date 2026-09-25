@@ -41,6 +41,15 @@ A header row followed by one bar per line:
 
 Use the plain Close column, not Adj Close. Malformed lines are rejected instead of crashing the program.
 
+## Real market data
+
+`fair-ticker` downloads daily bars for a ticker from Yahoo Finance (via the `yfinance` Python library) and runs Fair on them:
+
+    pip install yfinance
+    ./fair-ticker SPY 1y 20
+
+It saves the data to `data/SPY_1y.csv` and reuses that file for the rest of the day. The download step lives in `tools/fetch_bars.py`, separate from the C code, so the engine only ever parses one CSV format and runs offline.
+
 ## How it works
 
 - `src/csv.c` reads the file into a dynamically growing array of `struct Bar`.
