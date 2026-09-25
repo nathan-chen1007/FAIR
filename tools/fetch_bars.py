@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download daily OHLCV bars from Yahoo Finance (via yfinance) into Cadence's CSV format.
+"""Download daily OHLCV bars from Yahoo Finance (via yfinance) into the timestamp,open,high,low,close,volume CSV format.
 
 Output columns: timestamp,open,high,low,close,volume  (timestamp = YYYY-MM-DD)
 
@@ -19,7 +19,7 @@ import yfinance as yf
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Fetch daily bars into Cadence CSV format")
+    parser = argparse.ArgumentParser(description="Fetch daily bars into OHLCV CSV format")
     parser.add_argument("ticker")
     parser.add_argument("period", help="e.g. 1y, 5y, 10y, max")
     parser.add_argument("out", help="output CSV path, e.g. data/SPY_5y.csv")
