@@ -91,6 +91,8 @@ Worst-case relative error over the run: about 2.2e-13 for TWAP and 1.5e-10 for V
     tests/   test_window.c
     bench/   bench.c (speed), drift.c (numerical accuracy)
     data/    sample.csv
+    tools/        fetch_bars.py (downloads a ticker's bars via yfinance)
+    fair-ticker   download + run in one command
 
 ## Limitations
 
